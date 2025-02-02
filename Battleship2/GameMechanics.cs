@@ -1,319 +1,540 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Text;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Image = System.Drawing.Image;
 
 namespace Battleship2
 {
-    public class GameMechanics
-    {
+    public class GameMechanics : ShipPlacement
+    {             
+        
+        public const int picsize = 38;        
+        //private int[,] playerGrid, aiGrid;        
+        //private Dictionary<int,int> playerShips,aiShips;
+        //private bool playerTurn; // True παικτης - False τοτε ai
+
+        public int playerHits, playerMiss, playerTurns;
+        public int aiHits, aiMiss, aiTurns;             
+                
+        private int findShotLoc(string col)
+        {
+            int[] locations = { 7, 46, 85, 124, 162, 201, 239, 280, 316, 353 };
+
+            if (int.TryParse(col, out int num) && num >= 1 && num <= 10)
+            {
+                return locations[num - 1];
+            }
+            else
+            {
+                return locations[findShotPos(col) - 1];
+            }
+        }
+        private int findShotPos(string col)
+        {
+            int pos;
+
+            if (int.TryParse(col, out pos)) return pos;
+
+            switch (col.ToUpper())
+            {
+                case "A":
+                    pos = 1;
+                    break;
+                case "B":
+                    pos = 2;
+                    break;
+                case "C":
+                    pos = 3;
+                    break;
+                case "D":
+                    pos = 4;
+                    break;
+                case "E":
+                    pos = 5;
+                    break;
+                case "F":
+                    pos = 6;
+                    break;
+                case "G":
+                    pos = 7;
+                    break;
+                case "H":
+                    pos = 8;
+                    break;
+                case "I":
+                    pos = 9;
+                    break;
+                case "J":
+                    pos = 10;
+                    break;
+            }
+            return pos;
+        }
+
+        #region Playerfire
+        public void PlayerFire(PictureBox AIGridPicBox, string shotRow, string shotCol)
+        {
+            int locx = findShotLoc(shotRow);
+            int locy = findShotLoc(shotCol);
+            int x = findShotPos(shotRow);
+            int y = findShotPos(shotCol);
+            int coord = aiGrid[x, y];
+            playerTurns++;
+            if (playerHits == 14) { Ending(true); }          
+            switch (coord)
+            {
+                case 0:
+                    playerMiss++;
+                    PlacePlayerHitORMiss(AIGridPicBox, locx, locy, Properties.Resources.miss1, playerTurns);
+                    break;
+                case 1:
+                    aiGrid[locx, locy] = 2;                    
+                    playerHits++;
+                    PlacePlayerHitORMiss(AIGridPicBox, locx, locy, Properties.Resources.hit1, playerTurns);
+                    break;
+                case 2:                    
+                    MessageBox.Show("ALREADY ATTACKED CELL");
+                    break;
+            }
+            //int currShipLen = FindShipLength(locx, loc,coord, isHorizontal);      
+            //if (CheckShipSunk(coord, isHorizontal, currShipLen)){MessageBox.Show("u sunk");}
+        }
+
+        private void PlacePlayerHitORMiss(PictureBox AIGridPicBox, int locX, int locY, Image shotImage, int playerTurns)
+        {
+            PictureBox hitORMissPlayer = new PictureBox()
+            {
+                Name = $"hitORMissPlayer{playerTurns}",
+                Size = new Size(picsize, picsize),
+                Location = new Point(locX, locY),
+                Image = shotImage,
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                Parent = AIGridPicBox
+            };
+            AIGridPicBox.Controls.Add(hitORMissPlayer);
+        }               
+        #endregion
+
+
+        #region AIfire
+        public void AIFire(PictureBox playerGridPicBox)
+        {
+            Random rand = new Random();            
+            aiTurns++;
+            bool turn = true;
+            if (aiHits == 14) { Ending(false); }
+            while (turn)
+            {
+                int posx = rand.Next(0, 11);
+                int posy = rand.Next(0, 11);                
+                if (revealedCells[posx, posy])
+                {                    
+                    int locx = findShotLoc(posx.ToString());
+                    int locy = findShotLoc(posy.ToString());
+                    revealedCells[posx, posy] = false;
+                    turn = false;
+                    if (playerGrid[posx, posy] == 0)
+                    {
+                        aiMiss++;                        
+                        PlaceHitOrMissAi(playerGridPicBox, locx, locy, Properties.Resources.miss1, aiTurns);
+                    }
+                    else if (playerGrid[posx, posy] == 1)
+                    {
+                        aiHits++;
+                        PlaceHitOrMissAi(playerGridPicBox, locx, locy, Properties.Resources.hit1, aiTurns);
+                    }                 
+                }                                                                   
+            }                        
+        }
+
+        private void PlaceHitOrMissAi(PictureBox playerGridPicBox, int locX, int locY, Image shotImage, int aiTurns)
+        {
+            PictureBox HitOrMissAI = new PictureBox()
+            {
+                Name = $"hitOrMissAI{aiTurns}",
+                Size = new Size(picsize, picsize),
+                Location = new Point(locX, locY),
+                Image = shotImage,
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                Parent = playerGridPicBox
+            };
+            playerGridPicBox.Controls.Add(playerGridPicBox);
+        }
+        
+        #endregion
+
         
 
-        public int fire;
+        private int FindShipLength(int posx, int posy, int coord, bool isHorizontal)
+        {
+            int length = 0;
+            if (isHorizontal)
+            {
+
+                for (int x = 0; x < 10; x++)
+                {
+                    for (int y = 0; y < 10; y++)
+                    {
+                        if (aiGrid[x, y] == coord)
+                        {
+                            length++;
+                        }
+
+                    }
+                }
+            }
+            else
+            {
+
+            }
 
 
+            return length;
+        }
+
+        private bool CheckShipSunk(int coord, bool isHorizontal, int currShipLen)
+        {
+            int lenx = isHorizontal ? currShipLen : 1;
+            int leny = isHorizontal ? 1 : currShipLen;                        
+            int sum=0;
+
+            for (int x = 0; x < lenx; x++)
+            {
+                for (int y = 0; y< leny; y++)
+                {                    
+                    if (aiGrid[x,y]== coord)
+                    {                        
+                        sum++;
+                    }
+
+                }
+            }
+            if (sum == currShipLen) { return true; } else { return false; }                        
+        }
+              
+
+        private void Ending(bool ending)
+        {            
+            var endImage = ending ? Properties.Resources.victory : Properties.Resources.defeat;
+
+            PictureBox endBox = new PictureBox()
+            {
+                Size = new Size(1339, 715),
+                Location = new Point(0, 0),
+                Image = endImage,
+                SizeMode = PictureBoxSizeMode.StretchImage,
+            };
+
+            string endtext = ending ? "Victory" : "Defeat";
+
+            TextBox endwords = new TextBox()
+            {
+                Text = endtext,
+                Font = new Font("Arial", 24, FontStyle.Bold),
+                ForeColor = Color.Blue,
+                TextAlign = HorizontalAlignment.Center,
+                ReadOnly = true,
+                BorderStyle = BorderStyle.None,
+                Size = new Size(250, 50),
+                Location = new Point()
+            };
+
+            Form2 form2 = new Form2();
+            form2.Controls.Add(endBox);
+            endBox.BringToFront();
+            form2.Controls.Add(endwords);
+            endwords.BringToFront();
+        }        
+
+
+        
 
     }
 
     public class ShipPlacement
-    {
-        public int shipsizeSub = 2;
-        public int shipsizeDestr = 3;
-        public int shipsizeBttl = 4;
-        public int shipsizeCar = 5;
-
+    {        
         public int saiz = 40;
         public int diff = 80;
 
         public const int gridSize = 10;
-        public int[,] grid = new int[gridSize, gridSize];
-
-        private int findRow(string row)
-        {
-            int posf1x = 0;
-            switch (row)
-            {
-                case "1":
-                    posf1x = 7;
-                    break;
-                case "2":
-                    posf1x = 46;
-                    break;
-                case "3":
-                    posf1x = 85;
-                    break;
-                case "4":
-                    posf1x = 124;
-                    break;
-                case "5":
-                    posf1x = 162;
-                    break;
-                case "6":
-                    posf1x = 201;
-                    break;
-                case "7":
-                    posf1x = 239;
-                    break;
-                case "8":
-                    posf1x = 280;
-                    break;
-                case "9":
-                    posf1x = 316;
-                    break;
-                case "10":
-                    posf1x = 353;
-                    break;
-                default:
-                    Console.WriteLine("please enter column");
-                    break;
-            }
-            return posf1x;
-
-        }
-
-
-        private int findCol(string col)
-        {
-            int posf1y = 0;
-            switch (col.ToUpper())
-            {
-                case "A":
-                    posf1y = 7;
-                    break;
-                case "B":
-                    posf1y = 46;
-                    break;
-                case "C":
-                    posf1y = 85;
-                    break;
-                case "D":
-                    posf1y = 124;
-                    break;
-                case "E":
-                    posf1y = 162;
-                    break;
-                case "F":
-                    posf1y = 201;
-                    break;
-                case "G":
-                    posf1y = 239;
-                    break;
-                case "H":
-                    posf1y = 280;
-                    break;
-                case "I":
-                    posf1y = 316;
-                    break;
-                case "J":
-                    posf1y = 353;
-                    break;
-                default:
-                    Console.WriteLine("please enter row");
-                    break;
-            }
-            return posf1y;
-
-        }
-        
-        public void CreateSubmarine(PictureBox playerGridPicBox, string row, string col, bool isHorizontal)
-        {
-            int sizeX = isHorizontal ? saiz*2 : saiz;
-            int sizeY = isHorizontal ? saiz : saiz * 2;
-            var image = isHorizontal ? Properties.Resources.submarine : Properties.Resources.submarine_r;
-            
-            PictureBox submarine1 = new PictureBox()
-            {
-                Size = new Size(sizeX, sizeY),
-                Location = new Point(findCol(col),findRow(row)),
-                Image = image,
-                SizeMode = PictureBoxSizeMode.StretchImage,
-                Parent = playerGridPicBox
-            };
-            playerGridPicBox.Controls.Add(submarine1);
-            
-            findShip(row, col, isHorizontal, shipsizeSub);
-        }
-
-
-        public void CreateDestroyer()
-        {
-
-        }
-
-        public void CreateBttlship()
-        {
-
-        }
-
-        public void CreateCarrier()
-        {
-
-        }
-                
-
-        
-
-        private void CanPlaceShipAI()
-        {
-
-        }
-
-
-        private int findColPos(string col)
-        {
-            int posy=0;
-            switch (col.ToUpper())
-            {
-                case "A":
-                    posy = 1;
-                    break;
-                case "B":
-                    posy = 2;
-                    break;
-                case "C":
-                    posy = 3;
-                    break;
-                case "D":
-                    posy = 4;
-                    break;
-                case "E":
-                    posy = 5;
-                    break;
-                case "F":
-                    posy = 6;
-                    break;
-                case "G":
-                    posy = 7;
-                    break;
-                case "H":
-                    posy = 8;
-                    break;
-                case "I":
-                    posy = 9;
-                    break;
-                case "J":
-                    posy = 10;
-                    break;
-                default:
-                    Console.WriteLine("please enter row");
-                    break;
-            }
-            return posy;
-        }
-
-        private int findRowPos(string row)
-        {
-            int posx = 0;
-            switch (row)
-            {
-                case "1":
-                    posx = 1;
-                    break;
-                case "2":
-                    posx = 2;
-                    break;
-                case "3":
-                    posx = 3;
-                    break;
-                case "4":
-                    posx = 4;
-                    break;
-                case "5":
-                    posx = 5;
-                    break;
-                case "6":
-                    posx = 6;
-                    break;
-                case "7":
-                    posx = 7;
-                    break;
-                case "8":
-                    posx = 8;
-                    break;
-                case "9":
-                    posx = 9;
-                    break;
-                case "10":
-                    posx = 10;
-                    break;
-                default:
-                    Console.WriteLine("please enter column");
-                    break;
-            }
-            return posx;
-
-        }
-        private void findShip(string row, string col, bool isHorizontal, int shipsize)
-        {
-            int pixelX = findCol(col);
-            int pixelY = findRow(row);
-
-            int startX = GetGridIndex(pixelX);
-            int startY = GetGridIndex(pixelY);
-
-            int posx = findRowPos(row);
-            int posy = findColPos(col);
-
-            int rowIndex;
-            int colIndex;
-            
-            for (int i =0; i < 10; i++)
-            {
-                for (int j=0; j<10; j++)
-                {                    
-                    if (isHorizontal)
-                    {
-
-
-                        rowIndex = 1;
-
-                    }
-                    else
-                    {
-                        colIndex = 1;
-                    }
-                }
-            }        
-                       
-
-        }
-
-        private int GetGridIndex(int PixelPosition)
-        {
-            int offset = 7;
-            int cellsize = 80;
-            return (PixelPosition - offset) / cellsize;
-        }
-
+        public int[,] playerGrid = new int[gridSize, gridSize];
+        public int[] shipSize = { 2, 3, 4, 5 };
+        public int[,] aiGrid = new int[gridSize, gridSize];        
+        public bool[,] revealedCells = new bool[gridSize, gridSize];
+        public bool[,] placeAIRevealedCells = new bool[gridSize, gridSize];
 
         public void GameStart()
         {
             for (int i = 0; i < 10; i++)
             {
-                for (int j =0; j<10; j++)
+                for (int j = 0; j < 10; j++)
                 {
-                    grid[i, j] = 0;
-                }                
+                    playerGrid[i, j] = 0;
+                    aiGrid[i, j] = 0;
+                    revealedCells[i, j] = true;
+                    placeAIRevealedCells[i, j] = true;
+                }
+            }
+            CanPlaceShipAI();
+        }
+
+        private int FindLoc(string col)
+        {
+            int loc = 0;
+            int[] locations = { 7, 46, 85, 124, 162, 201, 239, 280, 316, 353 };
+            if (int.TryParse(col, out int num) && (num >0 && num <= 10))
+            {
+                return locations[num - 1];
+            }
+            else
+            {
+                switch (col.ToUpper())
+                {
+                    case "A":
+                        loc = locations[0];
+                        break;
+                    case "B":
+                        loc = locations[1];
+                        break;
+                    case "C":
+                        loc = locations[2];
+                        break;
+                    case "D":
+                        loc = locations[3];
+                        break;
+                    case "E":
+                        loc = locations[4];
+                        break;
+                    case "F":
+                        loc = locations[5];
+                        break;
+                    case "G":
+                        loc = locations[6];
+                        break;
+                    case "H":
+                        loc = locations[7];
+                        break;
+                    case "I":
+                        loc = locations[8];
+                        break;
+                    case "J":
+                        loc = locations[9];
+                        break;
+                }
+                return loc;
+
             }
 
         }
 
-        private void GameEnd()
-        {
 
+        
+        
+        
+        
+
+        private void PlaceShip(int row, int col, bool isHorizontal, int shipSize, bool playerTurn)
+        {
+            int x,y;
+            for (int k=0; k<shipSize; k++)
+            {
+                x = isHorizontal ? row : row + k;
+                y = isHorizontal ? col + k : col;
+
+                if (playerTurn)
+                {
+                    playerGrid[x, y] = 1;
+                }
+                else
+                {
+                    aiGrid[x, y] = 1;
+
+                }
+            }                      
+        }
+
+        #region AIShipPlacement
+        
+        private void CanPlaceShipAI()
+        {
+            foreach (int Ship in shipSize)
+            {
+                int currShipSize = Ship;
+                bool placed = true;
+                while (placed)
+                {
+                    int row, col;
+                    bool orientation;
+                    Randomizer(out row, out col, out orientation);
+                    if (placeAIRevealedCells[row, col] == true)
+                    {
+                        if (CheckAIPos(row, col, orientation, currShipSize))
+                        {
+                            PlaceShip(row, col, orientation, currShipSize, false);
+                            placed = false;
+                            placeAIRevealedCells[row, col] = false;
+                        }
+                    }
+
+                }
+            }
+        }
+
+        private static void Randomizer(out int row, out int col, out bool orientation)
+        {
+            Random random = new Random();
+            row = random.Next(0, 10);
+            col = random.Next(0, 10);
+            orientation = random.Next(2) == 0;
+        }
+
+        private bool CheckAIPos(int row, int col, bool isHorizontal, int currShipSize)
+        {        
+            try
+            {
+                if (isHorizontal && (row + currShipSize > 10)) return false;
+                if (!isHorizontal && (col + currShipSize > 10)) return false;
+
+                if (isHorizontal)
+                {
+                    for (int i = 0; i < currShipSize; i++)
+                    {
+                        if (aiGrid[row, col + i] != 0) return false;
+                    }
+
+                }
+                else
+                {
+                    for (int i = 0; i < currShipSize; i++)
+                    {
+                        if (aiGrid[row + i, col] != 0) return false;
+                    }
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Randomizer(out row, out col, out isHorizontal);
+                return false;
+            }
+        }
+        #endregion
+
+        #region PlayerPositionNPlacement
+        
+        public void PlacePlayerShip(PictureBox playerGridPicBox, string row, string col, bool isHorizontal,int shiplen, Image image)
+        {            
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j =0 ; j < 10; j++)
+                {
+                    Console.Write(playerGrid[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine(" = - = - = - = - = - =");
+
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    Console.Write(aiGrid[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine(" = - = - = - = - = - =");
+
+            if (!int.TryParse(row, out int posy) || posy < 1 || posy > 10)
+            {
+                MessageBox.Show("Invalid row input. Please enter a value between 1 and 10.");
+                return;
+            }
+            posy -= 1;
+            int posx = col.IndexOfAny("ABCDEFGHIJ".ToCharArray());
+            if (posx == -1)
+            {
+                MessageBox.Show("Invalid column input. Please enter a letter between A and J.");
+                return;
+            }
+            
+            PlaceShip(posx, posy, isHorizontal, shiplen, true);
+            int locx = FindLoc(col);
+            int locy = FindLoc(row);
+            CreateShip(playerGridPicBox, locx, locy, isHorizontal, shiplen, image);
+            
+        }
+
+        private bool checkShipPosition(int row, int col, bool isHorizontal, int shiplen)
+        {
+            bool placed = true;
+
+            // Check if the ship fits horizontally
+            if (isHorizontal)
+            {
+                if (col + shiplen > 10) // Check if the ship goes out of bounds on the right
+                {
+                    placed = false;
+                }
+                else
+                {
+                    for (int i = 0; i < shiplen; i++) // Iterate up to shiplen
+                    {
+                        if (playerGrid[row, col + i] != 0) // Check if there's already a ship
+                        {
+                            placed = false;
+                            break; // No need to check further if the position is blocked
+                        }
+                    }
+                }
+            }
+            // Check if the ship fits vertically
+            else
+            {
+                if (row + shiplen > 10) // Check if the ship goes out of bounds at the bottom
+                {
+                    placed = false;
+                }
+                else
+                {
+                    for (int i = 0; i < shiplen; i++) // Iterate up to shiplen
+                    {
+                        if (playerGrid[row + i, col] != 0) // Check if there's already a ship
+                        {
+                            placed = false;
+                            break; // No need to check further if the position is blocked
+                        }
+                    }
+                }
+            }
+
+            return placed;
         }
 
 
 
-        
 
 
 
+        private void CreateShip(PictureBox playerGridPicBox, int locx, int locy, bool isHorizontal, int shiplen, Image image)
+        {
+            int sizeX = isHorizontal ? saiz * shiplen : saiz;
+            int sizeY = isHorizontal ? saiz : saiz * shiplen;
+
+            PictureBox ship = new PictureBox()
+            {
+                Name = $"ship{shiplen}",
+                Size = new Size(sizeX, sizeY),
+                Location = new Point(locx, locy),
+                Image = image,
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                Parent = playerGridPicBox
+            };
+            playerGridPicBox.Controls.Add(ship);
+        }
+
+        #endregion
 
 
 

@@ -59,8 +59,6 @@
       <DependentUpon>Form2.cs</DependentUpon>
     </Compile>
     <Compile Include="GameMechanics.cs" />
-    <Compile Include="GraphicalWork.cs" />
-    <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -163,6 +161,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\destroyership-r.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btlship-r.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\carriership-r.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\defeat.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\victory.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

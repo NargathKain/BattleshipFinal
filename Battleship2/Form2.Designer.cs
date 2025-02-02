@@ -34,6 +34,10 @@
             this.fireBttn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.shotColTextBox = new System.Windows.Forms.TextBox();
+            this.shotRowTextBox = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -41,6 +45,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.startButton = new System.Windows.Forms.Button();
             this.battleButton = new System.Windows.Forms.Button();
             this.carrierOKbutton = new System.Windows.Forms.Button();
             this.bttlshipOKbutton = new System.Windows.Forms.Button();
@@ -103,15 +108,13 @@
             this.label36 = new System.Windows.Forms.Label();
             this.label37 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.AIGridPicBox = new System.Windows.Forms.PictureBox();
             this.playerGridPicBox = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AIGridPicBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.playerGridPicBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // fireBttn
@@ -119,10 +122,10 @@
             this.fireBttn.BackColor = System.Drawing.SystemColors.Desktop;
             this.fireBttn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
             this.fireBttn.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.fireBttn.Location = new System.Drawing.Point(337, 19);
+            this.fireBttn.Location = new System.Drawing.Point(784, 92);
             this.fireBttn.Margin = new System.Windows.Forms.Padding(4);
             this.fireBttn.Name = "fireBttn";
-            this.fireBttn.Size = new System.Drawing.Size(112, 57);
+            this.fireBttn.Size = new System.Drawing.Size(94, 57);
             this.fireBttn.TabIndex = 9;
             this.fireBttn.Text = "ΒΟΛΗ";
             this.fireBttn.UseVisualStyleBackColor = false;
@@ -142,6 +145,10 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.groupBox1.Controls.Add(this.shotColTextBox);
+            this.groupBox1.Controls.Add(this.shotRowTextBox);
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.textBox3);
             this.groupBox1.Controls.Add(this.fireBttn);
@@ -158,10 +165,48 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Στατιστικά Παρτίδας";
             // 
+            // shotColTextBox
+            // 
+            this.shotColTextBox.Location = new System.Drawing.Point(784, 63);
+            this.shotColTextBox.Name = "shotColTextBox";
+            this.shotColTextBox.Size = new System.Drawing.Size(94, 22);
+            this.shotColTextBox.TabIndex = 53;
+            this.shotColTextBox.Visible = false;
+            this.shotColTextBox.TextChanged += new System.EventHandler(this.shotColTextBox_TextChanged);
+            // 
+            // shotRowTextBox
+            // 
+            this.shotRowTextBox.Location = new System.Drawing.Point(784, 26);
+            this.shotRowTextBox.Name = "shotRowTextBox";
+            this.shotRowTextBox.Size = new System.Drawing.Size(94, 22);
+            this.shotRowTextBox.TabIndex = 53;
+            this.shotRowTextBox.Visible = false;
+            this.shotRowTextBox.TextChanged += new System.EventHandler(this.shotRowTextBox_TextChanged);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(728, 66);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(50, 16);
+            this.label11.TabIndex = 53;
+            this.label11.Text = "column";
+            this.label11.Visible = false;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(750, 26);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(28, 16);
+            this.label5.TabIndex = 53;
+            this.label5.Text = "row";
+            this.label5.Visible = false;
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(527, 34);
+            this.label4.Location = new System.Drawing.Point(517, 40);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(44, 16);
             this.label4.TabIndex = 19;
@@ -213,6 +258,7 @@
             // groupBox3
             // 
             this.groupBox3.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.groupBox3.Controls.Add(this.startButton);
             this.groupBox3.Controls.Add(this.battleButton);
             this.groupBox3.Controls.Add(this.carrierOKbutton);
             this.groupBox3.Controls.Add(this.bttlshipOKbutton);
@@ -260,14 +306,26 @@
             this.groupBox3.TabIndex = 16;
             this.groupBox3.TabStop = false;
             // 
+            // startButton
+            // 
+            this.startButton.Location = new System.Drawing.Point(217, 16);
+            this.startButton.Name = "startButton";
+            this.startButton.Size = new System.Drawing.Size(150, 24);
+            this.startButton.TabIndex = 53;
+            this.startButton.Text = "startButton";
+            this.startButton.UseVisualStyleBackColor = true;
+            this.startButton.Click += new System.EventHandler(this.startButton_Click);
+            // 
             // battleButton
             // 
-            this.battleButton.Location = new System.Drawing.Point(174, 559);
+            this.battleButton.BackColor = System.Drawing.Color.LightCoral;
+            this.battleButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.battleButton.Location = new System.Drawing.Point(198, 554);
             this.battleButton.Name = "battleButton";
-            this.battleButton.Size = new System.Drawing.Size(173, 74);
+            this.battleButton.Size = new System.Drawing.Size(182, 97);
             this.battleButton.TabIndex = 52;
             this.battleButton.Text = "BATTLE";
-            this.battleButton.UseVisualStyleBackColor = true;
+            this.battleButton.UseVisualStyleBackColor = false;
             this.battleButton.Click += new System.EventHandler(this.battleButton_Click);
             // 
             // carrierOKbutton
@@ -279,6 +337,7 @@
             this.carrierOKbutton.Text = "ok";
             this.carrierOKbutton.UseVisualStyleBackColor = true;
             this.carrierOKbutton.Visible = false;
+            this.carrierOKbutton.Click += new System.EventHandler(this.carrierOKbutton_Click);
             // 
             // bttlshipOKbutton
             // 
@@ -289,6 +348,7 @@
             this.bttlshipOKbutton.Text = "ok";
             this.bttlshipOKbutton.UseVisualStyleBackColor = true;
             this.bttlshipOKbutton.Visible = false;
+            this.bttlshipOKbutton.Click += new System.EventHandler(this.bttlshipOKbutton_Click);
             // 
             // destroyerOKbutton
             // 
@@ -299,6 +359,7 @@
             this.destroyerOKbutton.Text = "ok";
             this.destroyerOKbutton.UseVisualStyleBackColor = true;
             this.destroyerOKbutton.Visible = false;
+            this.destroyerOKbutton.Click += new System.EventHandler(this.destroyerOKbutton_Click);
             // 
             // submarineOKbutton
             // 
@@ -315,9 +376,9 @@
             // 
             this.pictureBox1.BackgroundImage = global::Battleship2.Properties.Resources.xtyphma;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(19, 559);
+            this.pictureBox1.Location = new System.Drawing.Point(6, 554);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(144, 74);
+            this.pictureBox1.Size = new System.Drawing.Size(171, 97);
             this.pictureBox1.TabIndex = 20;
             this.pictureBox1.TabStop = false;
             // 
@@ -348,6 +409,7 @@
             this.carrierColtextBox.Size = new System.Drawing.Size(94, 22);
             this.carrierColtextBox.TabIndex = 45;
             this.carrierColtextBox.Visible = false;
+            this.carrierColtextBox.TextChanged += new System.EventHandler(this.carrierColtextBox_TextChanged);
             // 
             // carrierHorizontalcheckBox
             // 
@@ -359,6 +421,7 @@
             this.carrierHorizontalcheckBox.Text = "horizontal";
             this.carrierHorizontalcheckBox.UseVisualStyleBackColor = true;
             this.carrierHorizontalcheckBox.Visible = false;
+            this.carrierHorizontalcheckBox.CheckedChanged += new System.EventHandler(this.carrierHorizontalcheckBox_CheckedChanged);
             // 
             // carrierVerticalcheckBox
             // 
@@ -370,6 +433,7 @@
             this.carrierVerticalcheckBox.Text = "vertical";
             this.carrierVerticalcheckBox.UseVisualStyleBackColor = true;
             this.carrierVerticalcheckBox.Visible = false;
+            this.carrierVerticalcheckBox.CheckedChanged += new System.EventHandler(this.carrierVerticalcheckBox_CheckedChanged);
             // 
             // carrierRowtextBox
             // 
@@ -378,6 +442,7 @@
             this.carrierRowtextBox.Size = new System.Drawing.Size(94, 22);
             this.carrierRowtextBox.TabIndex = 42;
             this.carrierRowtextBox.Visible = false;
+            this.carrierRowtextBox.TextChanged += new System.EventHandler(this.carrierRowtextBox_TextChanged);
             // 
             // bttlshipColLabel
             // 
@@ -406,6 +471,7 @@
             this.bttlshipColtextBox.Size = new System.Drawing.Size(94, 22);
             this.bttlshipColtextBox.TabIndex = 39;
             this.bttlshipColtextBox.Visible = false;
+            this.bttlshipColtextBox.TextChanged += new System.EventHandler(this.bttlshipColtextBox_TextChanged);
             // 
             // bttlshipHorizontalcheckBox
             // 
@@ -417,6 +483,7 @@
             this.bttlshipHorizontalcheckBox.Text = "horizontal";
             this.bttlshipHorizontalcheckBox.UseVisualStyleBackColor = true;
             this.bttlshipHorizontalcheckBox.Visible = false;
+            this.bttlshipHorizontalcheckBox.CheckedChanged += new System.EventHandler(this.bttlshipHorizontalcheckBox_CheckedChanged);
             // 
             // bttlshipVerticalcheckBox
             // 
@@ -428,14 +495,16 @@
             this.bttlshipVerticalcheckBox.Text = "vertical";
             this.bttlshipVerticalcheckBox.UseVisualStyleBackColor = true;
             this.bttlshipVerticalcheckBox.Visible = false;
+            this.bttlshipVerticalcheckBox.CheckedChanged += new System.EventHandler(this.bttlshipVerticalcheckBox_CheckedChanged);
             // 
             // bttlshipRowtextBox
             // 
             this.bttlshipRowtextBox.Location = new System.Drawing.Point(206, 299);
             this.bttlshipRowtextBox.Name = "bttlshipRowtextBox";
             this.bttlshipRowtextBox.Size = new System.Drawing.Size(94, 22);
-            this.bttlshipRowtextBox.TabIndex = 36;
+            this.bttlshipRowtextBox.TabIndex = 30;
             this.bttlshipRowtextBox.Visible = false;
+            this.bttlshipRowtextBox.TextChanged += new System.EventHandler(this.bttlshipRowtextBox_TextChanged);
             // 
             // destroyerColLabel
             // 
@@ -464,6 +533,7 @@
             this.destroyerColtextBox.Size = new System.Drawing.Size(94, 22);
             this.destroyerColtextBox.TabIndex = 33;
             this.destroyerColtextBox.Visible = false;
+            this.destroyerColtextBox.TextChanged += new System.EventHandler(this.destroyerColtextBox_TextChanged);
             // 
             // destroyerHorizontalcheckBox
             // 
@@ -475,6 +545,7 @@
             this.destroyerHorizontalcheckBox.Text = "horizontal";
             this.destroyerHorizontalcheckBox.UseVisualStyleBackColor = true;
             this.destroyerHorizontalcheckBox.Visible = false;
+            this.destroyerHorizontalcheckBox.CheckedChanged += new System.EventHandler(this.destroyerHorizontalcheckBox_CheckedChanged);
             // 
             // destroyerVerticalcheckBox
             // 
@@ -486,6 +557,7 @@
             this.destroyerVerticalcheckBox.Text = "vertical";
             this.destroyerVerticalcheckBox.UseVisualStyleBackColor = true;
             this.destroyerVerticalcheckBox.Visible = false;
+            this.destroyerVerticalcheckBox.CheckedChanged += new System.EventHandler(this.destroyerVerticalcheckBox_CheckedChanged);
             // 
             // destroyerRowtextBox
             // 
@@ -494,6 +566,7 @@
             this.destroyerRowtextBox.Size = new System.Drawing.Size(94, 22);
             this.destroyerRowtextBox.TabIndex = 30;
             this.destroyerRowtextBox.Visible = false;
+            this.destroyerRowtextBox.TextChanged += new System.EventHandler(this.destroyerRowtextBox_TextChanged);
             // 
             // nameTextBox
             // 
@@ -848,15 +921,15 @@
             this.label38.TabIndex = 34;
             this.label38.Text = " 1";
             // 
-            // pictureBox3
+            // AIGridPicBox
             // 
-            this.pictureBox3.BackgroundImage = global::Battleship2.Properties.Resources.battleship_grid1;
-            this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox3.Location = new System.Drawing.Point(911, 43);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(400, 400);
-            this.pictureBox3.TabIndex = 23;
-            this.pictureBox3.TabStop = false;
+            this.AIGridPicBox.BackgroundImage = global::Battleship2.Properties.Resources.battleship_grid1;
+            this.AIGridPicBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.AIGridPicBox.Location = new System.Drawing.Point(911, 43);
+            this.AIGridPicBox.Name = "AIGridPicBox";
+            this.AIGridPicBox.Size = new System.Drawing.Size(400, 400);
+            this.AIGridPicBox.TabIndex = 23;
+            this.AIGridPicBox.TabStop = false;
             // 
             // playerGridPicBox
             // 
@@ -869,14 +942,6 @@
             this.playerGridPicBox.TabStop = false;
             this.playerGridPicBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.playerGridPicBox_MouseMove);
             // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Location = new System.Drawing.Point(1040, 230);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(113, 45);
-            this.pictureBox2.TabIndex = 44;
-            this.pictureBox2.TabStop = false;
-            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -884,7 +949,6 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1323, 676);
-            this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.label29);
             this.Controls.Add(this.label30);
             this.Controls.Add(this.label31);
@@ -905,7 +969,7 @@
             this.Controls.Add(this.label21);
             this.Controls.Add(this.label20);
             this.Controls.Add(this.label18);
-            this.Controls.Add(this.pictureBox3);
+            this.Controls.Add(this.AIGridPicBox);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.playerGridPicBox);
@@ -921,9 +985,8 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AIGridPicBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.playerGridPicBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -981,7 +1044,7 @@
         private System.Windows.Forms.Button submarineOKbutton;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.PictureBox AIGridPicBox;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
@@ -1004,6 +1067,10 @@
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button battleButton;
-        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.TextBox shotColTextBox;
+        private System.Windows.Forms.TextBox shotRowTextBox;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button startButton;
     }
 }
