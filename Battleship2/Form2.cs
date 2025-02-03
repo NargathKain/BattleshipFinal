@@ -15,21 +15,25 @@ namespace Battleship2
 {
     public partial class Form2 : Form
     {
-        bool horizontalSubmarine, horizontalDestroyer, horizontalBttl, horizontalCarrier; // T/F analoga 
-        string destroyerRow, bttlRow, carrierRow; // 1-10
-        string destroyerCol, bttlCol, carrierCol; // a-j
+        bool horizontalSubmarine, horizontalDestroyer, horizontalCorvette, horizontalCarrier; // T/F analoga 
+        string destroyerRow, corvetteRow, carrierRow; // 1-10
+        string destroyerCol, corvetteCol, carrierCol; // a-j
         string shotRow, shotCol;      
 
         string name = null;
-        ShipPlacement shipPlacement = new ShipPlacement();
-        GameMechanics paixnidi = new GameMechanics();            
+
+        private ShipPlacement shipPlacement;
+        private GameMechanics paixnidi;
+
 
         public Form2()
         {
             InitializeComponent();
             MaximizeBox = false;
-            CenterToScreen();                   
-                        
+            CenterToScreen();
+            shipPlacement = new ShipPlacement();
+            
+
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -67,15 +71,15 @@ namespace Battleship2
             destroyerOKbutton.Visible = true;          
         }
 
-        private void bttlshipButton_Click(object sender, EventArgs e)
+        private void corvetteButton_Click(object sender, EventArgs e)
         {
-            bttlshipColLabel.Visible = true;
-            bttlshipColtextBox.Visible = true;
-            bttlshipRowLabel.Visible = true;
-            bttlshipRowtextBox.Visible = true;
-            bttlshipHorizontalcheckBox.Visible = true;
-            bttlshipVerticalcheckBox.Visible = true;
-            bttlshipOKbutton.Visible = true;
+            corvetteColLabel.Visible = true;
+            corvetteColtextBox.Visible = true;
+            corvetteRowLabel.Visible = true;
+            corvetteRowtextBox.Visible = true;
+            corvetteHorizontalcheckBox.Visible = true;
+            corvetteVerticalcheckBox.Visible = true;
+            corvetteOKbutton.Visible = true;
         }
 
         private void carrierButton_Click(object sender, EventArgs e)
@@ -156,10 +160,12 @@ namespace Battleship2
             {
                 MessageBox.Show("Please select ship orientation");
             }
-            
+            //ShipPlacement shipPlacement1 = new ShipPlacement();
             var image = horizontalSubmarine ? Properties.Resources.submarine : Properties.Resources.submarine_r;
+            //ShipPlacement submarine1 = new ShipPlacement();
+            //submarine1 = shipPlacement;
             shipPlacement.PlacePlayerShip(playerGridPicBox, submarineRowtextBox.Text, submarineColtextBox.Text, horizontalSubmarine, 2, image);
-
+            
         }
         #endregion
 
@@ -198,53 +204,44 @@ namespace Battleship2
             {
                 MessageBox.Show("Please select ship orientation");
             }
-            
+            //ShipPlacement shipPlacement2 = new ShipPlacement();
             var image = horizontalDestroyer ? Properties.Resources.destroyership1 : Properties.Resources.destroyership_r;
+            //ShipPlacement destroyer1 = new ShipPlacement();
+            //destroyer1 = shipPlacement;
             shipPlacement.PlacePlayerShip(playerGridPicBox, destroyerRow, destroyerCol, horizontalDestroyer, 3, image);
         }
 
         #endregion
 
-        #region placeBattleship
-        private void bttlshipRowtextBox_TextChanged(object sender, EventArgs e)
-        {
-            bttlRow = bttlshipRowLabel.Text;
-        }
+        #region placeCorvette
 
-        private void bttlshipColtextBox_TextChanged(object sender, EventArgs e)
+        private void corvetteVerticalcheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            bttlCol = bttlshipColLabel.Text;
-        }
-
-        private void bttlshipVerticalcheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (bttlshipVerticalcheckBox.Checked)
+            if (corvetteVerticalcheckBox.Checked)
             {
-                bttlshipHorizontalcheckBox.Checked = false;
-                horizontalBttl = false;
+                corvetteHorizontalcheckBox.Checked = false;
+                horizontalCorvette = false;
             }
         }
 
-        private void bttlshipHorizontalcheckBox_CheckedChanged(object sender, EventArgs e)
+        private void corvetteHorizontalcheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (bttlshipHorizontalcheckBox.Checked)
+            if (corvetteHorizontalcheckBox.Checked)
             {
-                bttlshipVerticalcheckBox.Checked = false;
-                horizontalBttl = true;
+                corvetteVerticalcheckBox.Checked = false;
+                horizontalCorvette = true;
             }
         }
-
-        private void bttlshipOKbutton_Click(object sender, EventArgs e)
+        private void corvetteOKbutton_Click(object sender, EventArgs e)
         {
-            if (!bttlshipHorizontalcheckBox.Checked && !bttlshipVerticalcheckBox.Checked)
+            if (!corvetteHorizontalcheckBox.Checked && !corvetteVerticalcheckBox.Checked)
             {
                 MessageBox.Show("Please select ship orientation");
             }
-            
-            var image = horizontalBttl ? Properties.Resources.btlship1 : Properties.Resources.btlship_r;
-            shipPlacement.PlacePlayerShip(playerGridPicBox, bttlRow, bttlCol, horizontalBttl, 4, image);
-
+            var image = horizontalCorvette ? Properties.Resources.btlship1 : Properties.Resources.btlship_r;
+            shipPlacement.PlacePlayerShip(playerGridPicBox, corvetteRowtextBox.Text, corvetteColtextBox.Text, horizontalCorvette, 4, image);
         }
+
         #endregion
 
         #region placeCarrier
@@ -257,6 +254,8 @@ namespace Battleship2
         {
             carrierCol = carrierColtextBox.Text;
         }
+
+        
 
         private void carrierVerticalcheckBox_CheckedChanged(object sender, EventArgs e)
         {
@@ -282,38 +281,40 @@ namespace Battleship2
             {
                 MessageBox.Show("Please select ship orientation");
             }
-            
+            //ShipPlacement shipPlacement4 = new ShipPlacement();
             var image = horizontalCarrier ? Properties.Resources.carriership1 : Properties.Resources.carriership_r;
+            //ShipPlacement carrier1 = new ShipPlacement();
+            //carrier1 = shipPlacement;
             shipPlacement.PlacePlayerShip(playerGridPicBox, carrierRow, carrierCol, horizontalCarrier, 5, image);
         }
         #endregion
 
         private void battleButton_Click(object sender, EventArgs e)
         {
-            //ShipPlacement shipPlacement = new ShipPlacement();
-            //shipPlacement.StartAi();                        
             foreach(Control ctrl in groupBox3.Controls)
             {
                 ctrl.Enabled = false;
             }
+
+            shotRowTextBox.Visible = true;
+            shotColTextBox.Visible = true;
+            shotRowLabel.Visible = true;
+            shotColLabel.Visible = true;
+            paixnidi = new GameMechanics(shipPlacement);
         }
 
-        private void fireBttn_Click(object sender, EventArgs e)
-        {            
-            //GameMechanics paixnidi = new GameMechanics();            
-            paixnidi.PlayerFire(AIGridPicBox,shotRow,shotCol);
-            paixnidi.AIFire(playerGridPicBox);
-        }
-
-        private void shotRowTextBox_TextChanged(object sender, EventArgs e)
+        private async void fireBttn_Click(object sender, EventArgs e)
         {
-            shotRow = shotRowTextBox.Text;
+            //GameMechanics paixnidi = new GameMechanics();
+            paixnidi.PlayerFire(AIGridPicBox, shotRowTextBox.Text, shotColTextBox.Text, this.FindForm());
+            await Task.Delay(2000);
+            shotRowTextBox.Clear();
+            shotColTextBox.Clear();
+            
+            paixnidi.AIFire(playerGridPicBox, this.FindForm());
         }
 
-        private void shotColTextBox_TextChanged(object sender, EventArgs e)
-        {
-            shotCol = shotColTextBox.Text;
-        }
+        
 
 
 
@@ -321,5 +322,13 @@ namespace Battleship2
         {
             shipPlacement.GameStart();
         }
+
+
+
+
+
+
+
+
     }
 }

@@ -36,8 +36,8 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.shotColTextBox = new System.Windows.Forms.TextBox();
             this.shotRowTextBox = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.shotColLabel = new System.Windows.Forms.Label();
+            this.shotRowLabel = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -48,7 +48,7 @@
             this.startButton = new System.Windows.Forms.Button();
             this.battleButton = new System.Windows.Forms.Button();
             this.carrierOKbutton = new System.Windows.Forms.Button();
-            this.bttlshipOKbutton = new System.Windows.Forms.Button();
+            this.corvetteOKbutton = new System.Windows.Forms.Button();
             this.destroyerOKbutton = new System.Windows.Forms.Button();
             this.submarineOKbutton = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -58,12 +58,12 @@
             this.carrierHorizontalcheckBox = new System.Windows.Forms.CheckBox();
             this.carrierVerticalcheckBox = new System.Windows.Forms.CheckBox();
             this.carrierRowtextBox = new System.Windows.Forms.TextBox();
-            this.bttlshipColLabel = new System.Windows.Forms.Label();
-            this.bttlshipRowLabel = new System.Windows.Forms.Label();
-            this.bttlshipColtextBox = new System.Windows.Forms.TextBox();
-            this.bttlshipHorizontalcheckBox = new System.Windows.Forms.CheckBox();
-            this.bttlshipVerticalcheckBox = new System.Windows.Forms.CheckBox();
-            this.bttlshipRowtextBox = new System.Windows.Forms.TextBox();
+            this.corvetteColLabel = new System.Windows.Forms.Label();
+            this.corvetteRowLabel = new System.Windows.Forms.Label();
+            this.corvetteColtextBox = new System.Windows.Forms.TextBox();
+            this.corvetteHorizontalcheckBox = new System.Windows.Forms.CheckBox();
+            this.corvetteVerticalcheckBox = new System.Windows.Forms.CheckBox();
+            this.corvetteRowtextBox = new System.Windows.Forms.TextBox();
             this.destroyerColLabel = new System.Windows.Forms.Label();
             this.destroyerRowLabel = new System.Windows.Forms.Label();
             this.destroyerColtextBox = new System.Windows.Forms.TextBox();
@@ -79,7 +79,7 @@
             this.submarineVerticalcheckBox = new System.Windows.Forms.CheckBox();
             this.submarineRowtextBox = new System.Windows.Forms.TextBox();
             this.carrierButton = new System.Windows.Forms.Button();
-            this.bttlshipButton = new System.Windows.Forms.Button();
+            this.corvetteButton = new System.Windows.Forms.Button();
             this.destroyerButton = new System.Windows.Forms.Button();
             this.submarineButton = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
@@ -147,8 +147,8 @@
             this.groupBox1.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.groupBox1.Controls.Add(this.shotColTextBox);
             this.groupBox1.Controls.Add(this.shotRowTextBox);
-            this.groupBox1.Controls.Add(this.label11);
-            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.shotColLabel);
+            this.groupBox1.Controls.Add(this.shotRowLabel);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.textBox3);
             this.groupBox1.Controls.Add(this.fireBttn);
@@ -172,7 +172,6 @@
             this.shotColTextBox.Size = new System.Drawing.Size(94, 22);
             this.shotColTextBox.TabIndex = 53;
             this.shotColTextBox.Visible = false;
-            this.shotColTextBox.TextChanged += new System.EventHandler(this.shotColTextBox_TextChanged);
             // 
             // shotRowTextBox
             // 
@@ -181,27 +180,26 @@
             this.shotRowTextBox.Size = new System.Drawing.Size(94, 22);
             this.shotRowTextBox.TabIndex = 53;
             this.shotRowTextBox.Visible = false;
-            this.shotRowTextBox.TextChanged += new System.EventHandler(this.shotRowTextBox_TextChanged);
             // 
-            // label11
+            // shotColLabel
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(728, 66);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(50, 16);
-            this.label11.TabIndex = 53;
-            this.label11.Text = "column";
-            this.label11.Visible = false;
+            this.shotColLabel.AutoSize = true;
+            this.shotColLabel.Location = new System.Drawing.Point(728, 66);
+            this.shotColLabel.Name = "shotColLabel";
+            this.shotColLabel.Size = new System.Drawing.Size(50, 16);
+            this.shotColLabel.TabIndex = 53;
+            this.shotColLabel.Text = "column";
+            this.shotColLabel.Visible = false;
             // 
-            // label5
+            // shotRowLabel
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(750, 26);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(28, 16);
-            this.label5.TabIndex = 53;
-            this.label5.Text = "row";
-            this.label5.Visible = false;
+            this.shotRowLabel.AutoSize = true;
+            this.shotRowLabel.Location = new System.Drawing.Point(750, 26);
+            this.shotRowLabel.Name = "shotRowLabel";
+            this.shotRowLabel.Size = new System.Drawing.Size(28, 16);
+            this.shotRowLabel.TabIndex = 53;
+            this.shotRowLabel.Text = "row";
+            this.shotRowLabel.Visible = false;
             // 
             // label4
             // 
@@ -261,7 +259,7 @@
             this.groupBox3.Controls.Add(this.startButton);
             this.groupBox3.Controls.Add(this.battleButton);
             this.groupBox3.Controls.Add(this.carrierOKbutton);
-            this.groupBox3.Controls.Add(this.bttlshipOKbutton);
+            this.groupBox3.Controls.Add(this.corvetteOKbutton);
             this.groupBox3.Controls.Add(this.destroyerOKbutton);
             this.groupBox3.Controls.Add(this.submarineOKbutton);
             this.groupBox3.Controls.Add(this.pictureBox1);
@@ -271,12 +269,12 @@
             this.groupBox3.Controls.Add(this.carrierHorizontalcheckBox);
             this.groupBox3.Controls.Add(this.carrierVerticalcheckBox);
             this.groupBox3.Controls.Add(this.carrierRowtextBox);
-            this.groupBox3.Controls.Add(this.bttlshipColLabel);
-            this.groupBox3.Controls.Add(this.bttlshipRowLabel);
-            this.groupBox3.Controls.Add(this.bttlshipColtextBox);
-            this.groupBox3.Controls.Add(this.bttlshipHorizontalcheckBox);
-            this.groupBox3.Controls.Add(this.bttlshipVerticalcheckBox);
-            this.groupBox3.Controls.Add(this.bttlshipRowtextBox);
+            this.groupBox3.Controls.Add(this.corvetteColLabel);
+            this.groupBox3.Controls.Add(this.corvetteRowLabel);
+            this.groupBox3.Controls.Add(this.corvetteColtextBox);
+            this.groupBox3.Controls.Add(this.corvetteHorizontalcheckBox);
+            this.groupBox3.Controls.Add(this.corvetteVerticalcheckBox);
+            this.groupBox3.Controls.Add(this.corvetteRowtextBox);
             this.groupBox3.Controls.Add(this.destroyerColLabel);
             this.groupBox3.Controls.Add(this.destroyerRowLabel);
             this.groupBox3.Controls.Add(this.destroyerColtextBox);
@@ -292,7 +290,7 @@
             this.groupBox3.Controls.Add(this.submarineVerticalcheckBox);
             this.groupBox3.Controls.Add(this.submarineRowtextBox);
             this.groupBox3.Controls.Add(this.carrierButton);
-            this.groupBox3.Controls.Add(this.bttlshipButton);
+            this.groupBox3.Controls.Add(this.corvetteButton);
             this.groupBox3.Controls.Add(this.destroyerButton);
             this.groupBox3.Controls.Add(this.submarineButton);
             this.groupBox3.Controls.Add(this.label9);
@@ -339,16 +337,16 @@
             this.carrierOKbutton.Visible = false;
             this.carrierOKbutton.Click += new System.EventHandler(this.carrierOKbutton_Click);
             // 
-            // bttlshipOKbutton
+            // corvetteOKbutton
             // 
-            this.bttlshipOKbutton.Location = new System.Drawing.Point(317, 299);
-            this.bttlshipOKbutton.Name = "bttlshipOKbutton";
-            this.bttlshipOKbutton.Size = new System.Drawing.Size(50, 23);
-            this.bttlshipOKbutton.TabIndex = 50;
-            this.bttlshipOKbutton.Text = "ok";
-            this.bttlshipOKbutton.UseVisualStyleBackColor = true;
-            this.bttlshipOKbutton.Visible = false;
-            this.bttlshipOKbutton.Click += new System.EventHandler(this.bttlshipOKbutton_Click);
+            this.corvetteOKbutton.Location = new System.Drawing.Point(317, 299);
+            this.corvetteOKbutton.Name = "corvetteOKbutton";
+            this.corvetteOKbutton.Size = new System.Drawing.Size(50, 23);
+            this.corvetteOKbutton.TabIndex = 50;
+            this.corvetteOKbutton.Text = "ok";
+            this.corvetteOKbutton.UseVisualStyleBackColor = true;
+            this.corvetteOKbutton.Visible = false;
+            this.corvetteOKbutton.Click += new System.EventHandler(this.corvetteOKbutton_Click);
             // 
             // destroyerOKbutton
             // 
@@ -444,67 +442,65 @@
             this.carrierRowtextBox.Visible = false;
             this.carrierRowtextBox.TextChanged += new System.EventHandler(this.carrierRowtextBox_TextChanged);
             // 
-            // bttlshipColLabel
+            // corvetteColLabel
             // 
-            this.bttlshipColLabel.AutoSize = true;
-            this.bttlshipColLabel.Location = new System.Drawing.Point(150, 327);
-            this.bttlshipColLabel.Name = "bttlshipColLabel";
-            this.bttlshipColLabel.Size = new System.Drawing.Size(50, 16);
-            this.bttlshipColLabel.TabIndex = 41;
-            this.bttlshipColLabel.Text = "column";
-            this.bttlshipColLabel.Visible = false;
+            this.corvetteColLabel.AutoSize = true;
+            this.corvetteColLabel.Location = new System.Drawing.Point(150, 327);
+            this.corvetteColLabel.Name = "corvetteColLabel";
+            this.corvetteColLabel.Size = new System.Drawing.Size(50, 16);
+            this.corvetteColLabel.TabIndex = 41;
+            this.corvetteColLabel.Text = "column";
+            this.corvetteColLabel.Visible = false;
             // 
-            // bttlshipRowLabel
+            // corvetteRowLabel
             // 
-            this.bttlshipRowLabel.AutoSize = true;
-            this.bttlshipRowLabel.Location = new System.Drawing.Point(160, 299);
-            this.bttlshipRowLabel.Name = "bttlshipRowLabel";
-            this.bttlshipRowLabel.Size = new System.Drawing.Size(28, 16);
-            this.bttlshipRowLabel.TabIndex = 40;
-            this.bttlshipRowLabel.Text = "row";
-            this.bttlshipRowLabel.Visible = false;
+            this.corvetteRowLabel.AutoSize = true;
+            this.corvetteRowLabel.Location = new System.Drawing.Point(160, 299);
+            this.corvetteRowLabel.Name = "corvetteRowLabel";
+            this.corvetteRowLabel.Size = new System.Drawing.Size(28, 16);
+            this.corvetteRowLabel.TabIndex = 40;
+            this.corvetteRowLabel.Text = "row";
+            this.corvetteRowLabel.Visible = false;
             // 
-            // bttlshipColtextBox
+            // corvetteColtextBox
             // 
-            this.bttlshipColtextBox.Location = new System.Drawing.Point(206, 324);
-            this.bttlshipColtextBox.Name = "bttlshipColtextBox";
-            this.bttlshipColtextBox.Size = new System.Drawing.Size(94, 22);
-            this.bttlshipColtextBox.TabIndex = 39;
-            this.bttlshipColtextBox.Visible = false;
-            this.bttlshipColtextBox.TextChanged += new System.EventHandler(this.bttlshipColtextBox_TextChanged);
+            this.corvetteColtextBox.Location = new System.Drawing.Point(206, 324);
+            this.corvetteColtextBox.Name = "corvetteColtextBox";
+            this.corvetteColtextBox.Size = new System.Drawing.Size(94, 22);
+            this.corvetteColtextBox.TabIndex = 39;
+            this.corvetteColtextBox.Visible = false;
             // 
-            // bttlshipHorizontalcheckBox
+            // corvetteHorizontalcheckBox
             // 
-            this.bttlshipHorizontalcheckBox.AutoSize = true;
-            this.bttlshipHorizontalcheckBox.Location = new System.Drawing.Point(206, 378);
-            this.bttlshipHorizontalcheckBox.Name = "bttlshipHorizontalcheckBox";
-            this.bttlshipHorizontalcheckBox.Size = new System.Drawing.Size(83, 20);
-            this.bttlshipHorizontalcheckBox.TabIndex = 38;
-            this.bttlshipHorizontalcheckBox.Text = "horizontal";
-            this.bttlshipHorizontalcheckBox.UseVisualStyleBackColor = true;
-            this.bttlshipHorizontalcheckBox.Visible = false;
-            this.bttlshipHorizontalcheckBox.CheckedChanged += new System.EventHandler(this.bttlshipHorizontalcheckBox_CheckedChanged);
+            this.corvetteHorizontalcheckBox.AutoSize = true;
+            this.corvetteHorizontalcheckBox.Location = new System.Drawing.Point(206, 378);
+            this.corvetteHorizontalcheckBox.Name = "corvetteHorizontalcheckBox";
+            this.corvetteHorizontalcheckBox.Size = new System.Drawing.Size(83, 20);
+            this.corvetteHorizontalcheckBox.TabIndex = 38;
+            this.corvetteHorizontalcheckBox.Text = "horizontal";
+            this.corvetteHorizontalcheckBox.UseVisualStyleBackColor = true;
+            this.corvetteHorizontalcheckBox.Visible = false;
+            this.corvetteHorizontalcheckBox.CheckedChanged += new System.EventHandler(this.corvetteHorizontalcheckBox_CheckedChanged);
             // 
-            // bttlshipVerticalcheckBox
+            // corvetteVerticalcheckBox
             // 
-            this.bttlshipVerticalcheckBox.AutoSize = true;
-            this.bttlshipVerticalcheckBox.Location = new System.Drawing.Point(206, 352);
-            this.bttlshipVerticalcheckBox.Name = "bttlshipVerticalcheckBox";
-            this.bttlshipVerticalcheckBox.Size = new System.Drawing.Size(69, 20);
-            this.bttlshipVerticalcheckBox.TabIndex = 37;
-            this.bttlshipVerticalcheckBox.Text = "vertical";
-            this.bttlshipVerticalcheckBox.UseVisualStyleBackColor = true;
-            this.bttlshipVerticalcheckBox.Visible = false;
-            this.bttlshipVerticalcheckBox.CheckedChanged += new System.EventHandler(this.bttlshipVerticalcheckBox_CheckedChanged);
+            this.corvetteVerticalcheckBox.AutoSize = true;
+            this.corvetteVerticalcheckBox.Location = new System.Drawing.Point(206, 352);
+            this.corvetteVerticalcheckBox.Name = "corvetteVerticalcheckBox";
+            this.corvetteVerticalcheckBox.Size = new System.Drawing.Size(69, 20);
+            this.corvetteVerticalcheckBox.TabIndex = 37;
+            this.corvetteVerticalcheckBox.Text = "vertical";
+            this.corvetteVerticalcheckBox.UseVisualStyleBackColor = true;
+            this.corvetteVerticalcheckBox.Visible = false;
+            this.corvetteVerticalcheckBox.CheckedChanged += new System.EventHandler(this.corvetteVerticalcheckBox_CheckedChanged);
             // 
-            // bttlshipRowtextBox
+            // corvetteRowtextBox
             // 
-            this.bttlshipRowtextBox.Location = new System.Drawing.Point(206, 299);
-            this.bttlshipRowtextBox.Name = "bttlshipRowtextBox";
-            this.bttlshipRowtextBox.Size = new System.Drawing.Size(94, 22);
-            this.bttlshipRowtextBox.TabIndex = 30;
-            this.bttlshipRowtextBox.Visible = false;
-            this.bttlshipRowtextBox.TextChanged += new System.EventHandler(this.bttlshipRowtextBox_TextChanged);
+            this.corvetteRowtextBox.Location = new System.Drawing.Point(206, 299);
+            this.corvetteRowtextBox.Name = "corvetteRowtextBox";
+            this.corvetteRowtextBox.Size = new System.Drawing.Size(94, 22);
+            this.corvetteRowtextBox.TabIndex = 30;
+            this.corvetteRowtextBox.Visible = false;
             // 
             // destroyerColLabel
             // 
@@ -658,16 +654,16 @@
             this.carrierButton.UseVisualStyleBackColor = true;
             this.carrierButton.Click += new System.EventHandler(this.carrierButton_Click);
             // 
-            // bttlshipButton
+            // corvetteButton
             // 
-            this.bttlshipButton.BackgroundImage = global::Battleship2.Properties.Resources.btlship1;
-            this.bttlshipButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.bttlshipButton.Location = new System.Drawing.Point(13, 300);
-            this.bttlshipButton.Name = "bttlshipButton";
-            this.bttlshipButton.Size = new System.Drawing.Size(116, 46);
-            this.bttlshipButton.TabIndex = 20;
-            this.bttlshipButton.UseVisualStyleBackColor = true;
-            this.bttlshipButton.Click += new System.EventHandler(this.bttlshipButton_Click);
+            this.corvetteButton.BackgroundImage = global::Battleship2.Properties.Resources.btlship1;
+            this.corvetteButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.corvetteButton.Location = new System.Drawing.Point(13, 300);
+            this.corvetteButton.Name = "corvetteButton";
+            this.corvetteButton.Size = new System.Drawing.Size(116, 46);
+            this.corvetteButton.TabIndex = 20;
+            this.corvetteButton.UseVisualStyleBackColor = true;
+            this.corvetteButton.Click += new System.EventHandler(this.corvetteButton_Click);
             // 
             // destroyerButton
             // 
@@ -1008,7 +1004,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button carrierButton;
-        private System.Windows.Forms.Button bttlshipButton;
+        private System.Windows.Forms.Button corvetteButton;
         private System.Windows.Forms.Button destroyerButton;
         private System.Windows.Forms.Button submarineButton;
         private System.Windows.Forms.CheckBox submarineHorizontalcheckBox;
@@ -1031,15 +1027,15 @@
         private System.Windows.Forms.CheckBox carrierHorizontalcheckBox;
         private System.Windows.Forms.CheckBox carrierVerticalcheckBox;
         private System.Windows.Forms.TextBox carrierRowtextBox;
-        private System.Windows.Forms.Label bttlshipColLabel;
-        private System.Windows.Forms.Label bttlshipRowLabel;
-        private System.Windows.Forms.TextBox bttlshipColtextBox;
-        private System.Windows.Forms.CheckBox bttlshipHorizontalcheckBox;
-        private System.Windows.Forms.CheckBox bttlshipVerticalcheckBox;
-        private System.Windows.Forms.TextBox bttlshipRowtextBox;
+        private System.Windows.Forms.Label corvetteColLabel;
+        private System.Windows.Forms.Label corvetteRowLabel;
+        private System.Windows.Forms.TextBox corvetteColtextBox;
+        private System.Windows.Forms.CheckBox corvetteHorizontalcheckBox;
+        private System.Windows.Forms.CheckBox corvetteVerticalcheckBox;
+        private System.Windows.Forms.TextBox corvetteRowtextBox;
         private System.Windows.Forms.PictureBox playerGridPicBox;
         private System.Windows.Forms.Button carrierOKbutton;
-        private System.Windows.Forms.Button bttlshipOKbutton;
+        private System.Windows.Forms.Button corvetteOKbutton;
         private System.Windows.Forms.Button destroyerOKbutton;
         private System.Windows.Forms.Button submarineOKbutton;
         private System.Windows.Forms.Label label19;
@@ -1069,8 +1065,8 @@
         private System.Windows.Forms.Button battleButton;
         private System.Windows.Forms.TextBox shotColTextBox;
         private System.Windows.Forms.TextBox shotRowTextBox;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label shotColLabel;
+        private System.Windows.Forms.Label shotRowLabel;
         private System.Windows.Forms.Button startButton;
     }
 }
