@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Security.Policy;
 using System.Text;
 using System.Windows.Forms;
@@ -14,20 +15,18 @@ namespace Battleship2
     {             
         
         public const int picsize = 38;        
-        //private int[,] playerGrid, aiGrid;        
-        //private Dictionary<int,int> playerShips,aiShips;
-        //private bool playerTurn; // True παικτης - False τοτε ai
-
         public int playerHits  , playerMiss , playerTurns ;
         public int aiHits , aiMiss , aiTurns ;
         public const int gridSize = 10;
         public int[,] playerGrid = new int[gridSize, gridSize];
         public int[,] aiGrid = new int[gridSize, gridSize];
         public bool[,] revealedCells = new bool[gridSize, gridSize];
-        //int[,] aiGrid = shipPlacement.aiGrid;
-        //ShipPlacement shipPlacement = new ShipPlacement();
-        ShipPlacement shipPlacement;
+        public string[] ailocs = new string[4];
+        public string[] playerlocs = new string[4];
+        public string[] shipNames = { "Submarine", "Destroyer", "Corvette", "Carrier" };
+        public int[] shipSize;
 
+        ShipPlacement shipPlacement;
 
         public GameMechanics(ShipPlacement shipPlacement)
         {
@@ -35,14 +34,76 @@ namespace Battleship2
             this.playerGrid = shipPlacement.playerGrid;
             this.aiGrid = shipPlacement.aiGrid;
             this.revealedCells = shipPlacement.revealedCells;
+            this.ailocs = shipPlacement.ailocs;
+            this.playerlocs = shipPlacement.playerlocs;
+            this.shipSize = shipPlacement.shipSize;
+        }
+
+        public void CheckShipSunk(int x, int y, bool isPlayer)
+        {
+            string[] coord = isPlayer ? playerlocs : ailocs;
+
+            for (int i = 0; i < coord.Length; i++)
+            {
+                if (IsShipSunk(coord[i], isPlayer))
+                {
+                    MessageBox.Show("Congrats, you have sunk my "+ shipNames[i]);
+                    break;
+                }
+            }
+        }
+
+        private bool IsShipSunk(string ship, bool isPlayer)
+        {
+            string[] shipCoords = ship.Split(',');
+            int[,] oppGrid = isPlayer ? aiGrid : playerGrid;
+
+            int x = int.Parse(shipCoords[0]);
+            int y = int.Parse(shipCoords[1]);
+            int counter = 0;
+            bool isHorizontal = false;
+
+            if (oppGrid[x, y] != 2) return false;
+
+            for (int i =0; i<shipSize.Length; i++)
+            {
+                for(int j=0; j < shipSize[i];j++)
+                {
+                    if (!isHorizontal)
+                    {
+                        if(oppGrid[x, y + j] ==1|| oppGrid[x, y + j] == 2)
+                        {
+                            counter++;
+                        }
+                        else if (oppGrid[x, y + j] == 0)
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        if (oppGrid[x + j, y] == 1 || oppGrid[x + j, y] == 2)
+                        {
+                            counter++;
+                        }
+                        else if (oppGrid[x + j, y] == 0)
+                        {
+                            return false;
+                        }
+                    }
+                    if (counter == shipSize[i] - 1) { return true; }
+                }
+            }
+
+            
+
+            return true;
         }
 
 
         #region Playerfire
         public void PlayerFire(PictureBox AIGridPicBox, string shotRow, string shotCol, Form form2)
         {
-            //if (playerTurns ==0) { startMechanics(); }
-            //int[,] aiGrid = shipPlacement.AiGrid;
             int locx = shipPlacement.FindLoc(shotCol);
             int locy = shipPlacement.FindLoc(shotRow);
             int x = shipPlacement.FindPos(shotCol);
@@ -64,6 +125,7 @@ namespace Battleship2
                     MessageBox.Show("ALREADY ATTACKED CELL");
                     break;
             }
+            CheckShipSunk(x,y,true);
             Console.WriteLine(" = - = PLAYER = - =");
             for (int i = 0; i < 10; i++)
             {
@@ -84,8 +146,6 @@ namespace Battleship2
                 Console.WriteLine();
             }
             Console.WriteLine(" = - = - = - = - = - =");
-            //int currShipLen = FindShipLength(locx, loc,coord, isHorizontal);      
-            //if (CheckShipSunk(coord, isHorizontal, currShipLen)){MessageBox.Show("u sunk");}
         }
 
         
@@ -118,8 +178,6 @@ namespace Battleship2
             {
                 if (checkAIFire(posx, posy))
                 {
-                    //int locx = FindLoc(posx.ToString());
-                    //int locy = FindLoc(posy.ToString());
                     int locx = shipPlacement.FindLoc(posx.ToString());
                     int locy = shipPlacement.FindLoc(posy.ToString());
                     Console.WriteLine("attack at"+posx+","+posy);
@@ -140,6 +198,7 @@ namespace Battleship2
                             MessageBox.Show("ALREADY ATTACKED CELL");
                             break;
                     }
+                    CheckShipSunk(posx, posy,false);
                 }
 
             }
@@ -224,8 +283,6 @@ namespace Battleship2
                 ReadOnly = true,
                 BorderStyle = BorderStyle.None,
                 Size = new Size(250, 50)
-                //Location = new Point(form2.ClientSize.Width ),
-                
             };
             endwords.Location = new Point((form2.ClientSize.Width - endwords.Width) / 2, (form2.ClientSize.Height - endwords.Height) / 2);
 
@@ -234,7 +291,6 @@ namespace Battleship2
             form2.Controls.Add(endwords);
             endwords.BringToFront();
         }        
-
     }
 
     public class ShipPlacement
@@ -250,10 +306,9 @@ namespace Battleship2
         public bool[,] placeAIRevealedCells = new bool[gridSize, gridSize];
         public int[] playerHMTurns = new int[100];
         public int[] aiHMTurns = new int[100];
-
-        //public int[,] PlayerGrid => playerGrid;
-        //public int[,] AiGrid => aiGrid;
-
+        public string[] ailocs = new string[4];
+        public string[] playerlocs = new string[4];
+        
         public void GameStart()
         {
             for (int i = 0; i < 10; i++)
@@ -270,6 +325,11 @@ namespace Battleship2
             {
                 playerHMTurns[i] = i;
                 aiHMTurns[i] = i;
+                if (i<4)
+                {
+                    ailocs[i] = "";
+                    playerlocs[i] = "";
+                }
             }
             CanPlaceShipAI();
         }
@@ -357,7 +417,6 @@ namespace Battleship2
         }
 
         #region AIShipPlacement
-
         private void CanPlaceShipAI()
         {
             foreach (int Ship in shipSize)
@@ -376,6 +435,8 @@ namespace Battleship2
                             PlaceShip(row, col, orientation, currShipSize, false);
                             placed = false;
                             placeAIRevealedCells[row, col] = false;
+                            string loc = row.ToString() + "," + col.ToString();
+                            ailocs[ailocs.Length] = loc;
                         }
                     }
 
@@ -404,7 +465,6 @@ namespace Battleship2
                     {
                         if (aiGrid[row, col + i] != 0) return false;
                     }
-
                 }
                 else
                 {
@@ -425,7 +485,6 @@ namespace Battleship2
         #endregion
 
         #region PlayerPositionNPlacement
-        
         public void PlacePlayerShip(PictureBox playerGridPicBox, string row, string col, bool isHorizontal,int shiplen, Image image)
         {
             int posx = FindPos(row);
@@ -437,6 +496,8 @@ namespace Battleship2
                 int locx = FindLoc(col);
                 int locy = FindLoc(row);
                 CreateShip(playerGridPicBox, locx, locy, isHorizontal, shiplen, image);
+                string loc = posx.ToString() + "," + posy.ToString();
+                playerlocs[shiplen-2] = loc;
             }
             else
             {
@@ -518,19 +579,15 @@ namespace Battleship2
         {
             try
             {
-                // Horizontal ships: Check columns (x-axis)
                 if (isHorizontal && (col + shiplen > 9)) return false;
 
-                // Vertical ships: Check rows (y-axis)
                 if (!isHorizontal && (row + shiplen > 9)) return false;
 
-                // Check each cell the ship would occupy
                 for (int i = 0; i < shiplen; i++)
                 {
-                    int x = isHorizontal ? col + i : col; // Column index
-                    int y = isHorizontal ? row : row + i; // Row index
-
-                    if (playerGrid[y, x] != 0) return false; // [row, column]
+                    int x = isHorizontal ? col + i : col; 
+                    int y = isHorizontal ? row : row + i; 
+                    if (playerGrid[y, x] != 0) return false;
                 }
                 return true;
             }
@@ -539,12 +596,7 @@ namespace Battleship2
                 Console.WriteLine(e);
                 return false;
             }
-            
         }
-
-
-
-
 
 
         private void CreateShip(PictureBox playerGridPicBox, int locx, int locy, bool isHorizontal, int shiplen, Image image)
@@ -626,9 +678,6 @@ namespace Battleship2
         }
 
         #endregion
-
-
-
 
     }
 }

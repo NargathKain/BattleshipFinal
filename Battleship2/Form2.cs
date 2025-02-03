@@ -18,7 +18,8 @@ namespace Battleship2
         bool horizontalSubmarine, horizontalDestroyer, horizontalCorvette, horizontalCarrier; // T/F analoga 
         string destroyerRow, corvetteRow, carrierRow; // 1-10
         string destroyerCol, corvetteCol, carrierCol; // a-j
-        string shotRow, shotCol;      
+        private Timer timer;
+        private int secondsElapsed=0;
 
         string name = null;
 
@@ -32,8 +33,6 @@ namespace Battleship2
             MaximizeBox = false;
             CenterToScreen();
             shipPlacement = new ShipPlacement();
-            
-
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -98,7 +97,7 @@ namespace Battleship2
         private void nameTextBox_TextChanged(object sender, EventArgs e)
         {
             name = nameTextBox.Text;
-            //NameCheck(name);            
+            NameCheck(name);            
         }
 
         private bool NameCheck(string Name)
@@ -116,10 +115,7 @@ namespace Battleship2
             return true;                
         }
 
-        private void playerGridPicBox_MouseMove(object sender, MouseEventArgs e)
-        {
-            label4.Text = string.Format("{0},{1}",e.Location.X,e.Location.Y);
-        }
+        
         #endregion
 
         #region placeSubmarine
@@ -250,6 +246,8 @@ namespace Battleship2
             carrierRow = carrierRowtextBox.Text;
         }
 
+        
+
         private void carrierColtextBox_TextChanged(object sender, EventArgs e)
         {
             carrierCol = carrierColtextBox.Text;
@@ -281,10 +279,7 @@ namespace Battleship2
             {
                 MessageBox.Show("Please select ship orientation");
             }
-            //ShipPlacement shipPlacement4 = new ShipPlacement();
             var image = horizontalCarrier ? Properties.Resources.carriership1 : Properties.Resources.carriership_r;
-            //ShipPlacement carrier1 = new ShipPlacement();
-            //carrier1 = shipPlacement;
             shipPlacement.PlacePlayerShip(playerGridPicBox, carrierRow, carrierCol, horizontalCarrier, 5, image);
         }
         #endregion
@@ -296,21 +291,33 @@ namespace Battleship2
                 ctrl.Enabled = false;
             }
 
-            shotRowTextBox.Visible = true;
-            shotColTextBox.Visible = true;
-            shotRowLabel.Visible = true;
-            shotColLabel.Visible = true;
+            groupBox1.Visible = true;
             paixnidi = new GameMechanics(shipPlacement);
+
+            timer1.Start();
+            timer1.Tick += timer1_Tick;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            secondsElapsed++;
+            if(timeTextBox != null)
+            {
+                timeTextBox.Text = secondsElapsed.ToString();
+            }
         }
 
         private async void fireBttn_Click(object sender, EventArgs e)
         {
-            //GameMechanics paixnidi = new GameMechanics();
             paixnidi.PlayerFire(AIGridPicBox, shotRowTextBox.Text, shotColTextBox.Text, this.FindForm());
+            turnTextBox.Text = paixnidi.aiTurns.ToString();
+            oppHitsTextBox.Text = paixnidi.aiHits.ToString();
+            plhitsTextBox.Text = paixnidi.playerHits.ToString();
+            oppMissTextBox.Text = paixnidi.aiMiss.ToString();
+            plMissTextBox.Text = paixnidi.playerMiss.ToString();
             await Task.Delay(2000);
             shotRowTextBox.Clear();
             shotColTextBox.Clear();
-            
             paixnidi.AIFire(playerGridPicBox, this.FindForm());
         }
 

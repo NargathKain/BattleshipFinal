@@ -38,12 +38,11 @@
             this.shotRowTextBox = new System.Windows.Forms.TextBox();
             this.shotColLabel = new System.Windows.Forms.Label();
             this.shotRowLabel = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.timeTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox23 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.turnTextBox = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.startButton = new System.Windows.Forms.Button();
             this.battleButton = new System.Windows.Forms.Button();
@@ -110,12 +109,29 @@
             this.label38 = new System.Windows.Forms.Label();
             this.AIGridPicBox = new System.Windows.Forms.PictureBox();
             this.playerGridPicBox = new System.Windows.Forms.PictureBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.oppShipTextBox = new System.Windows.Forms.TextBox();
+            this.oppMissTextBox = new System.Windows.Forms.TextBox();
+            this.oppHitsTextBox = new System.Windows.Forms.TextBox();
+            this.plShipsTextBox = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.plMissTextBox = new System.Windows.Forms.TextBox();
+            this.plhitsTextBox = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AIGridPicBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.playerGridPicBox)).BeginInit();
             this.SuspendLayout();
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // fireBttn
             // 
@@ -139,23 +155,34 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(81, 37);
             this.label1.TabIndex = 13;
-            this.label1.Text = "Πλοία Αντιπάλου";
+            this.label1.Text = "turn";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.groupBox1.Controls.Add(this.plhitsTextBox);
+            this.groupBox1.Controls.Add(this.plMissTextBox);
+            this.groupBox1.Controls.Add(this.label14);
+            this.groupBox1.Controls.Add(this.label13);
+            this.groupBox1.Controls.Add(this.label12);
+            this.groupBox1.Controls.Add(this.plShipsTextBox);
+            this.groupBox1.Controls.Add(this.oppHitsTextBox);
+            this.groupBox1.Controls.Add(this.oppMissTextBox);
+            this.groupBox1.Controls.Add(this.oppShipTextBox);
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.shotColTextBox);
             this.groupBox1.Controls.Add(this.shotRowTextBox);
             this.groupBox1.Controls.Add(this.shotColLabel);
             this.groupBox1.Controls.Add(this.shotRowLabel);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.textBox3);
+            this.groupBox1.Controls.Add(this.timeTextBox);
             this.groupBox1.Controls.Add(this.fireBttn);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.textBox2);
+            this.groupBox1.Controls.Add(this.textBox23);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.turnTextBox);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
             this.groupBox1.Location = new System.Drawing.Point(396, 502);
@@ -163,7 +190,8 @@
             this.groupBox1.Size = new System.Drawing.Size(915, 173);
             this.groupBox1.TabIndex = 14;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Στατιστικά Παρτίδας";
+            this.groupBox1.Text = "Game Stats";
+            this.groupBox1.Visible = false;
             // 
             // shotColTextBox
             // 
@@ -171,7 +199,6 @@
             this.shotColTextBox.Name = "shotColTextBox";
             this.shotColTextBox.Size = new System.Drawing.Size(94, 22);
             this.shotColTextBox.TabIndex = 53;
-            this.shotColTextBox.Visible = false;
             // 
             // shotRowTextBox
             // 
@@ -179,7 +206,6 @@
             this.shotRowTextBox.Name = "shotRowTextBox";
             this.shotRowTextBox.Size = new System.Drawing.Size(94, 22);
             this.shotRowTextBox.TabIndex = 53;
-            this.shotRowTextBox.Visible = false;
             // 
             // shotColLabel
             // 
@@ -189,7 +215,6 @@
             this.shotColLabel.Size = new System.Drawing.Size(50, 16);
             this.shotColLabel.TabIndex = 53;
             this.shotColLabel.Text = "column";
-            this.shotColLabel.Visible = false;
             // 
             // shotRowLabel
             // 
@@ -199,23 +224,13 @@
             this.shotRowLabel.Size = new System.Drawing.Size(28, 16);
             this.shotRowLabel.TabIndex = 53;
             this.shotRowLabel.Text = "row";
-            this.shotRowLabel.Visible = false;
             // 
-            // label4
+            // timeTextBox
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(517, 40);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(44, 16);
-            this.label4.TabIndex = 19;
-            this.label4.Text = "label4";
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(93, 63);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(59, 22);
-            this.textBox3.TabIndex = 18;
+            this.timeTextBox.Location = new System.Drawing.Point(93, 63);
+            this.timeTextBox.Name = "timeTextBox";
+            this.timeTextBox.Size = new System.Drawing.Size(59, 22);
+            this.timeTextBox.TabIndex = 18;
             // 
             // label3
             // 
@@ -225,15 +240,15 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(81, 37);
             this.label3.TabIndex = 17;
-            this.label3.Text = "Συνολικός Χρόνος";
+            this.label3.Text = "total time";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // textBox2
+            // textBox23
             // 
-            this.textBox2.Location = new System.Drawing.Point(93, 98);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(59, 22);
-            this.textBox2.TabIndex = 16;
+            this.textBox23.Location = new System.Drawing.Point(93, 98);
+            this.textBox23.Name = "textBox23";
+            this.textBox23.Size = new System.Drawing.Size(59, 22);
+            this.textBox23.TabIndex = 16;
             // 
             // label2
             // 
@@ -243,15 +258,15 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(81, 22);
             this.label2.TabIndex = 15;
-            this.label2.Text = "Σειρά";
+            this.label2.Text = "e";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // textBox1
+            // turnTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(93, 26);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(59, 22);
-            this.textBox1.TabIndex = 14;
+            this.turnTextBox.Location = new System.Drawing.Point(93, 26);
+            this.turnTextBox.Name = "turnTextBox";
+            this.turnTextBox.Size = new System.Drawing.Size(59, 22);
+            this.turnTextBox.TabIndex = 14;
             // 
             // groupBox3
             // 
@@ -412,7 +427,7 @@
             // carrierHorizontalcheckBox
             // 
             this.carrierHorizontalcheckBox.AutoSize = true;
-            this.carrierHorizontalcheckBox.Location = new System.Drawing.Point(203, 500);
+            this.carrierHorizontalcheckBox.Location = new System.Drawing.Point(206, 500);
             this.carrierHorizontalcheckBox.Name = "carrierHorizontalcheckBox";
             this.carrierHorizontalcheckBox.Size = new System.Drawing.Size(83, 20);
             this.carrierHorizontalcheckBox.TabIndex = 44;
@@ -693,7 +708,7 @@
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(113, 45);
             this.label9.TabIndex = 17;
-            this.label9.Text = "Αεροπλανοφόρο\r\n(5 θέσεις)";
+            this.label9.Text = "Carrier \r\n(5 pos)";
             // 
             // label8
             // 
@@ -701,15 +716,15 @@
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(98, 36);
             this.label8.TabIndex = 16;
-            this.label8.Text = "Αντιτορπιλικό\r\n(4 θέσεις)";
+            this.label8.Text = "Corvette \r\n(4 pos)";
             // 
             // label7
             // 
-            this.label7.Location = new System.Drawing.Point(28, 237);
+            this.label7.Location = new System.Drawing.Point(28, 227);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(85, 35);
             this.label7.TabIndex = 15;
-            this.label7.Text = "Πολεμικό\r\n(3 θέσεις)";
+            this.label7.Text = "Destroyer \r\n(3 pos)";
             // 
             // label6
             // 
@@ -717,7 +732,7 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(85, 35);
             this.label6.TabIndex = 14;
-            this.label6.Text = "Υποβρύχιο\r\n(2 θέσεις)";
+            this.label6.Text = "Submarine \r\n(2 pos)";
             // 
             // label19
             // 
@@ -936,7 +951,114 @@
             this.playerGridPicBox.Size = new System.Drawing.Size(400, 400);
             this.playerGridPicBox.TabIndex = 17;
             this.playerGridPicBox.TabStop = false;
-            this.playerGridPicBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.playerGridPicBox_MouseMove);
+            // 
+            // label4
+            // 
+            this.label4.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label4.Location = new System.Drawing.Point(191, 18);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(81, 37);
+            this.label4.TabIndex = 54;
+            this.label4.Text = "cpu Ships";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label5
+            // 
+            this.label5.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label5.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label5.Location = new System.Drawing.Point(191, 56);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(81, 37);
+            this.label5.TabIndex = 55;
+            this.label5.Text = "cpu misses";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label11
+            // 
+            this.label11.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label11.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label11.Location = new System.Drawing.Point(191, 98);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(81, 22);
+            this.label11.TabIndex = 56;
+            this.label11.Text = "cpu hits";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // oppShipTextBox
+            // 
+            this.oppShipTextBox.Location = new System.Drawing.Point(301, 26);
+            this.oppShipTextBox.Name = "oppShipTextBox";
+            this.oppShipTextBox.Size = new System.Drawing.Size(59, 22);
+            this.oppShipTextBox.TabIndex = 57;
+            // 
+            // oppMissTextBox
+            // 
+            this.oppMissTextBox.Location = new System.Drawing.Point(301, 63);
+            this.oppMissTextBox.Name = "oppMissTextBox";
+            this.oppMissTextBox.Size = new System.Drawing.Size(59, 22);
+            this.oppMissTextBox.TabIndex = 58;
+            // 
+            // oppHitsTextBox
+            // 
+            this.oppHitsTextBox.Location = new System.Drawing.Point(301, 98);
+            this.oppHitsTextBox.Name = "oppHitsTextBox";
+            this.oppHitsTextBox.Size = new System.Drawing.Size(59, 22);
+            this.oppHitsTextBox.TabIndex = 59;
+            // 
+            // plShipsTextBox
+            // 
+            this.plShipsTextBox.Location = new System.Drawing.Point(514, 26);
+            this.plShipsTextBox.Name = "plShipsTextBox";
+            this.plShipsTextBox.Size = new System.Drawing.Size(59, 22);
+            this.plShipsTextBox.TabIndex = 60;
+            // 
+            // label12
+            // 
+            this.label12.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label12.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label12.Location = new System.Drawing.Point(404, 22);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(104, 29);
+            this.label12.TabIndex = 61;
+            this.label12.Text = "Player Ships";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label13
+            // 
+            this.label13.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label13.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label13.Location = new System.Drawing.Point(404, 55);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(94, 33);
+            this.label13.TabIndex = 62;
+            this.label13.Text = "Player misses";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label14
+            // 
+            this.label14.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label14.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label14.Location = new System.Drawing.Point(404, 92);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(81, 22);
+            this.label14.TabIndex = 63;
+            this.label14.Text = "Player hits";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // plMissTextBox
+            // 
+            this.plMissTextBox.Location = new System.Drawing.Point(514, 66);
+            this.plMissTextBox.Name = "plMissTextBox";
+            this.plMissTextBox.Size = new System.Drawing.Size(59, 22);
+            this.plMissTextBox.TabIndex = 64;
+            // 
+            // plhitsTextBox
+            // 
+            this.plhitsTextBox.Location = new System.Drawing.Point(514, 95);
+            this.plhitsTextBox.Name = "plhitsTextBox";
+            this.plhitsTextBox.Size = new System.Drawing.Size(59, 22);
+            this.plhitsTextBox.TabIndex = 65;
             // 
             // Form2
             // 
@@ -992,10 +1114,10 @@
         private System.Windows.Forms.Button fireBttn;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox23;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox turnTextBox;
+        private System.Windows.Forms.TextBox timeTextBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label6;
@@ -1061,12 +1183,23 @@
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Label label38;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button battleButton;
         private System.Windows.Forms.TextBox shotColTextBox;
         private System.Windows.Forms.TextBox shotRowTextBox;
         private System.Windows.Forms.Label shotColLabel;
         private System.Windows.Forms.Label shotRowLabel;
         private System.Windows.Forms.Button startButton;
+        private System.Windows.Forms.TextBox plhitsTextBox;
+        private System.Windows.Forms.TextBox plMissTextBox;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox plShipsTextBox;
+        private System.Windows.Forms.TextBox oppHitsTextBox;
+        private System.Windows.Forms.TextBox oppMissTextBox;
+        private System.Windows.Forms.TextBox oppShipTextBox;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
     }
 }
